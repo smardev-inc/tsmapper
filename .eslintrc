@@ -1,0 +1,39 @@
+{
+  "root": true,
+  "env": {
+    "es6": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": { 
+    "no-console": "error",
+    "no-var": "error",
+    "semi": "error",
+    "indent": "error",
+    "no-multi-spaces": "error",
+    "space-in-parens": "error",
+    "no-multiple-empty-lines": "error",
+    "prefer-const": "error",
+    "no-use-before-define": "error",
+    "accessor-pairs": "error",
+    "block-scoped-var": "error",
+    "class-methods-use-this": "error",
+    "no-constructor-return": "error",
+    "no-fallthrough": "error",
+    "no-return-assign": "error",
+    "no-unused-expressions": "error",
+    "require-await": "error",
+    "array-bracket-newline": "error",
+    "no-useless-constructor": "error",
+    "no-useless-rename": "error",
+    "prefer-arrow-callback": "error"
+
+  }
+}

@@ -1,46 +1,23 @@
-/**
- * Multiplies a value by 2. (Also a full example of Typedoc's functionality.)
- *
- * ### Example (es module)
- * ```js
- * import { double } from 'typescript-starter'
- * console.log(double(4))
- * // => 8
- * ```
- *
- * ### Example (commonjs)
- * ```js
- * var double = require('typescript-starter').double;
- * console.log(double(4))
- * // => 8
- * ```
- *
- * @param value   Comment describing the `value` parameter.
- * @returns       Comment describing the return type.
- * @anotherNote   Some other value.
- */
-export function double(value: number): number {
-  return value * 2;
-}
+/* eslint @typescript-eslint/no-explicit-any: 0 */
 
 /**
- * Raise the value of the first parameter to the power of the second using the es7 `**` operator.
- *
- * ### Example (es module)
- * ```js
- * import { power } from 'typescript-starter'
- * console.log(power(2,3))
- * // => 8
- * ```
- *
- * ### Example (commonjs)
- * ```js
- * var power = require('typescript-starter').power;
- * console.log(power(2,3))
- * // => 8
- * ```
+ * Provides object mapping methods
  */
-export function power(base: number, exponent: number): number {
-  // This is a proposed es7 operator, which should be transpiled by Typescript
-  return base ** exponent;
+export class ObjectMapper {
+    public static map<TFrom, TTo>(source: TFrom): TTo {
+        // this one is ugly, but apparently is the only way to create the new instance
+        // from the generic type without triggering a tslint error
+        const result: TTo = ({} as unknown) as TTo;
+
+        // loop trough all properties
+        for (const key of Object.keys(source)) {
+            ObjectMapper.internalMap(source, result, key);
+        }
+
+        return result;
+    }
+
+    private static internalMap(source: any, destination: any, sourcePropName: string): void {
+        destination[sourcePropName] = source[sourcePropName];
+    }
 }
