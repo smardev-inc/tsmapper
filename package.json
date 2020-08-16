@@ -19,7 +19,7 @@
     "prettier": "prettier --config .prettierrc src/**/*.ts --write",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
-    "test": "run-s build test:*",
+    "test": "run-s test:*",
     "test:unit": "jest --coverage",
     "watch:jest": "jest --coverage --watchAll",
     "clean": "trash build test"
@@ -32,7 +32,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm run build && npm test"
     }
   },
   "engines": {
