@@ -20,3 +20,9 @@ jobs:
 
             - name: Create Release
               run: npm run release
+            
+            - name: Commit and Push Changes
+              run: |
+               git add -A
+               git commit -m "New release created"
+               git push
