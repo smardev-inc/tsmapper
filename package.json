@@ -1,6 +1,6 @@
 {
   "name": "tsmapper",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Object mapping done easy in TypeScript",
   "main": "dist/main/index.js",
   "typings": "dist/main/index.d.ts",
@@ -26,7 +26,7 @@
     "make-badges": "istanbul-badges-readme",
     "release": "run-s release:*",
     "release:build": "run-s clean build test make-badges version",
-    "release:create-dist": "rimraf.sync('dist') && node -e \"require('fs').rename('build', 'dist', function(err) { if (err) console.log(err); console.log('Build folder successfully renamed!') })\""
+    "release:create-dist": "node -e \"require('fs').rmdirSync('dist', { recursive: true });\" && node -e \"require('fs').rename('build', 'dist', function(err) { if (err) console.log(err); console.log('Build folder successfully renamed!') })\""
   },
   "scripts-info": {
     "info": "Display information about the package scripts",
@@ -55,7 +55,6 @@
     "jest-without-globals": "0.0.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
-    "rimraf": "^3.0.2",
     "standard-version": "^9.0.0",
     "trash-cli": "^3.1.0",
     "ts-jest": "^26.1.4",
