@@ -59,5 +59,12 @@
     "trash-cli": "^3.1.0",
     "ts-jest": "^26.1.4",
     "typescript": "^3.9.7"
+  },
+  "standard-version": {
+    "skip": {
+      "changelog": true,
+      "commit": true,
+      "tag": true
+    }
   }
 }
