@@ -1,7 +1,8 @@
 name: Create and Publish Release
 
-on: 
-  workflow_dispatch
+on:
+  release:
+    types: [published]
                   
 jobs:
     build:
@@ -23,3 +24,8 @@ jobs:
 
             - name: Create Release
               run: npm run release
+              
+            - name: Publish Package
+              run: npm publish --access public
+              env:
+                NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
