@@ -31,3 +31,5 @@ jobs:
                git commit -m "New release created"
                git tag -a "v${{ steps.package-version.outputs.current-version}}"
                git push
+              env:
+               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
