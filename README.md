@@ -14,10 +14,10 @@ Websites, mobile applications and others developed using TypeScript more and mor
 
 ```bash
 # NPM
-npm install utility-types
+npm install @smardev/tsmapper
 
 # YARN
-yarn add utility-types
+yarn add @smardev/tsmapper
 ```
 
 ## Using It
