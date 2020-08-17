@@ -25,7 +25,7 @@
     "clean": "trash build test",
     "make-badges": "istanbul-badges-readme",
     "release": "run-s release:*",
-    "release:build": "run-s clean build test make-badges",
+    "release:build": "run-s clean build test make-badges version",
     "release:create-dist": "node -e \"require('fs'); fs.rmdirSync('dist', { recursive: true }); fs.renameSync('build', 'dist')\""
   },
   "scripts-info": {
