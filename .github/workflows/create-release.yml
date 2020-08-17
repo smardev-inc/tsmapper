@@ -1,4 +1,4 @@
-name: Publish Release
+name: Create and Publish Release
 
 jobs:
     build:
