@@ -1,6 +1,6 @@
 {
   "name": "tsmapper",
-  "version": "0.1.5",
+  "version": "0.1.0",
   "description": "Object mapping done easy in TypeScript",
   "main": "dist/main/index.js",
   "typings": "dist/main/index.d.ts",
@@ -26,7 +26,7 @@
     "make-badges": "istanbul-badges-readme",
     "release": "run-s release:*",
     "release:build": "run-s clean build test make-badges version",
-    "release:create-dist": "node -e \"require('fs').rmdirSync('dist', { recursive: true });\" && node -e \"require('fs').rename('build', 'dist', function(err) { if (err) console.log(err); console.log('Build folder successfully renamed!') })\""
+    "release:create-dist": "node -e \"require('fs'); fs.rmdirSync('dist', { recursive: true }); fs.renameSync('build', 'dist')\""
   },
   "scripts-info": {
     "info": "Display information about the package scripts",
