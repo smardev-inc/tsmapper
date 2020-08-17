@@ -9,18 +9,18 @@ jobs:
         runs-on: ubuntu-latest
         
         steps:
-            - name: Repository Checkout
-              uses: actions/checkout@v2
+        - name: Repository Checkout
+          uses: actions/checkout@v2
 
-            - name: Setup NodeJs
-              uses: actions/setup-node@v1
-              with:
-                  node-version: '14'
+        - name: Setup NodeJs
+          uses: actions/setup-node@v1
+          with:
+              node-version: '14'
 
-            - name: Install Dependencies
-              run: npm install
-              
-            - name: Publish Package
-              run: npm publish --access public
-              env:
-                NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        - name: Install Dependencies
+          run: npm install
+
+        - name: Publish Package
+          run: npm publish --access public
+          env:
+            NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
