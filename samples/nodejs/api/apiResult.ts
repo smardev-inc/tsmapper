@@ -1,3 +1,6 @@
+/* eslint @typescript-eslint/no-explicit-any: 0 */
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 export class ApiResult {
     responseCode: number;
     responseData: string;

@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/no-explicit-any: 0 */
+
 import * as usersData from '../data/users.json';
 import { IApiModule } from './apiModule';
 import { IApiHandler, ApiHandler } from './apiHandler';
@@ -5,7 +7,7 @@ import { ApiResult } from './apiResult';
 
 const apiHandlers: IApiHandler[] = new Array<ApiHandler>();
 
-const getAll = function (request: any): ApiResult {
+const getAll = function (): ApiResult {
     return ApiResult.ObjectResult(usersData.data);
 };
 
@@ -20,7 +22,8 @@ apiHandlers.push(ApiHandler.get('/users', getAll));
 apiHandlers.push(ApiHandler.get('/users/:userId', getById));
 
 export class UsersApiModule implements IApiModule {
+    handlers = apiHandlers;
     getHandlers(): IApiHandler[] {
-        return apiHandlers;
+        return this.handlers;
     }
 }
