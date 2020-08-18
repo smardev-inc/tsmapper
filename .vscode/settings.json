@@ -5,5 +5,10 @@
         "**/node_modules": true,
         ".nyc_output": true,
         ".github": true
-    }
+    },
+    "prettier.semi": true,
+    "prettier.trailingComma": "none",
+    "prettier.singleQuote": true,
+    "prettier.printWidth": 150,
+    "prettier.tabWidth": 4
 }
