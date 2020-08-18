@@ -1,0 +1,20 @@
+{
+  "name": "tsmapper.samples.nodejs",
+  "version": "1.0.0",
+  "description": "NodeJS Sample using TSMapper",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "run": "node build/index.js"
+  },
+  "author": "pedromvgomes",
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.7",
+    "express": "^4.17.1",
+    "typescript": "^3.9.7"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  }
+}
