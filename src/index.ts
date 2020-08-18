@@ -1,2 +1,9 @@
 export { ObjectMapper } from './lib/objectmapper';
-export { ObjectMapConfiguration, ObjectMapInstruction } from './lib/objectmapconfiguration';
+
+export {
+    IObjectMapInstruction,
+    MapperBuilder,
+    MapInstructionBuilder,
+    ObjectMapConfigurationBuilder,
+    ObjectMapConfiguration
+} from './lib/objectmapconfiguration';
