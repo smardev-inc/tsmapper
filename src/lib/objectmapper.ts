@@ -1,4 +1,5 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
+/* eslint @typescript-eslint/no-non-null-assertion: 0 */
 
 import * as Utils from './utils';
 import { TypeDescriptor } from './typedescriptor';
@@ -8,9 +9,11 @@ import { ObjectMapConfiguration } from './objectmapconfiguration';
  * Provides object mapping methods
  */
 export class ObjectMapper {
-    private static typeDescriptors = new Map<string, TypeDescriptor>();
+    //private static typeDescriptors = new Map<string, TypeDescriptor>();
+    private static mappingNamePrefixes = ['', 'm_', '_'];
 
     private static getTypeDescriptor(obj: any): TypeDescriptor {
+        /*TODO: The caching is not working, need to sort this out
         let clsid = obj.constructor.prototype['CLSID'];
         if (Utils.isNullOrUndefined(clsid)) {
             clsid = '__TSMAPPER_' + ObjectMapper.typeDescriptors.size;
@@ -20,9 +23,10 @@ export class ObjectMapper {
         if (ObjectMapper.typeDescriptors.has(clsid)) {
             return <TypeDescriptor>ObjectMapper.typeDescriptors.get(clsid);
         }
+        */
 
         const descriptor = TypeDescriptor.create(obj);
-        ObjectMapper.typeDescriptors.set(clsid, descriptor);
+        //ObjectMapper.typeDescriptors.set(clsid, descriptor);
         return descriptor;
     }
 
@@ -146,6 +150,34 @@ export class ObjectMapper {
         return ObjectMapper.autoMapInternal(source, factory);
     }
 
+    private static getPropertyValue(sourceDescriptor: TypeDescriptor, source: any, name: string, prefixes: string[]): any {
+        for (let i = 0; i < prefixes.length; i++) {
+            const fullName = prefixes[i] + name;
+
+            // order is: First search for case sensitive property, next case sensitive field, and after case insensitive
+            // property followed by a case insensitive field
+            let property = sourceDescriptor.getProperty(fullName, false);
+            if (!Utils.isUndefined(property)) {
+                return source[property!.name];
+            }
+
+            let field = sourceDescriptor.getField(fullName, false);
+            if (!Utils.isUndefined(field)) {
+                return source[field!.name];
+            }
+
+            property = sourceDescriptor.getProperty(fullName, true);
+            if (!Utils.isUndefined(property)) {
+                return source[property!.name];
+            }
+
+            field = sourceDescriptor.getField(fullName, true);
+            if (!Utils.isUndefined(field)) {
+                return source[field!.name];
+            }
+        }
+    }
+
     private static autoMapInternal(source: any, factory: () => any): any {
         // mapping from source array
         if (Array.isArray(source)) {
@@ -154,16 +186,12 @@ export class ObjectMapper {
             return array;
         }
 
-        const descriptor = ObjectMapper.getTypeDescriptor(source);
-
         const result = factory();
-        Array.from(descriptor.propertyNames).forEach((name) => {
-            const value: any = (<any>source)[name];
-            (<any>result)[name] = value;
-        });
+        const sourceDescriptor = ObjectMapper.getTypeDescriptor(source);
+        const targetDescriptor = ObjectMapper.getTypeDescriptor(result);
 
-        Array.from(descriptor.fieldNames).forEach((name) => {
-            const value: any = (<any>source)[name];
+        Array.from(targetDescriptor.propertyNames).forEach((name) => {
+            const value: any = ObjectMapper.getPropertyValue(sourceDescriptor, source, name, ObjectMapper.mappingNamePrefixes);
             (<any>result)[name] = value;
         });
 
