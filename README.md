@@ -6,7 +6,7 @@ Websites, mobile applications and others developed using TypeScript more and mor
 ![License](https://img.shields.io/github/license/smardev-inc/tsmapper)
 ![Version](https://img.shields.io/github/package-json/v/smardev-inc/tsmapper)
 ![Build](https://img.shields.io/github/workflow/status/smardev-inc/tsmapper/Continuous%20Integration)
-![Statements](https://img.shields.io/badge/Coverage-92.81%25-brightgreen.svg)
+![Statements](https://img.shields.io/badge/Coverage-93.14%25-brightgreen.svg)
 ![Issues](https://img.shields.io/github/issues/smardev-inc/tsmapper)
 ![Issues](https://img.shields.io/github/commit-activity/w/smardev-inc/tsmapper)
 
