@@ -3,7 +3,7 @@
 
 import { ObjectMapper } from '../index';
 import { describe, it, expect } from 'jest-without-globals';
-import { ObjectMapConfigurationBuilder } from '../lib/objectmapconfiguration';
+import { ObjectMapConfigurationBuilder, ObjectMapConfiguration } from '../lib/objectmapconfiguration';
 
 const data = [
     {
@@ -169,5 +169,29 @@ describe('ObjectMapper Tests', () => {
             expect((<any>users[i]).first_name).toBe(undefined);
             expect((<any>users[i]).last_name).toBe(undefined);
         }
+    });
+
+    it('Configure using implicit builder', () => {
+        const config = ObjectMapConfiguration.create((builder: ObjectMapConfigurationBuilder) => {
+            builder
+                .map('id')
+                .from('id')
+                .custom((propValue: any) => 'CUSTOM:' + propValue);
+            builder.map('birthDate').from('birthDate');
+            builder.map('email').from('email');
+            builder.map('phone').from('phone');
+            builder.map('profilePicture').from('profilePicture');
+            builder.map('userName').from('userName');
+            builder.map('displayName').custom((source: any) => source.first_name + ' ' + source.last_name);
+        });
+
+        expect(config.mappingInstructions.length).toBe(7);
+        expect(config.mappingInstructions[0].propertyName).toBe('id');
+        expect(config.mappingInstructions[1].propertyName).toBe('birthDate');
+        expect(config.mappingInstructions[2].propertyName).toBe('email');
+        expect(config.mappingInstructions[3].propertyName).toBe('phone');
+        expect(config.mappingInstructions[4].propertyName).toBe('profilePicture');
+        expect(config.mappingInstructions[5].propertyName).toBe('userName');
+        expect(config.mappingInstructions[6].propertyName).toBe('displayName');
     });
 });

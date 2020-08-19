@@ -1,4 +1,5 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
+/*eslint no-use-before-define: ["error", { "classes": false }]*/
 
 import * as Utils from './utils';
 
@@ -90,6 +91,13 @@ export class ObjectMapConfiguration {
 
     public get mappingInstructions(): IObjectMapInstruction[] {
         return Array.from(this.instructions.values());
+    }
+
+    public static create(config: (builder: ObjectMapConfigurationBuilder) => void): ObjectMapConfiguration {
+        const builder = new ObjectMapConfigurationBuilder();
+        config(builder);
+
+        return builder.build();
     }
 }
 
