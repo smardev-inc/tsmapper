@@ -22,9 +22,68 @@ yarn add @smardev/tsmapper
 
 ## Using It
 
-```ts
-// TODO: Add examples
+TSMapper provides automatic and configured object mapping.
+Please note that in both cases, if the input object is an array, the return will be an array of mapped object instances
 
+**Automatic mappig example**
+
+This is the simplest way to map objects. For now mapping is done between properties/fields with the same name and with no type conversion, plan are to extend this allowing for more advanced ways of mapping properties/fields and supporting nested mapping and/or type conversion 
+
+```ts
+import { ObjectMapper } from '../index';
+
+class Foo {
+    public id = '';
+    public name = '';
+}
+
+class Bar {
+    private m_id = '';
+    private m_name = '';
+    
+    public get id(): string {
+        return this.m_id;
+    }
+
+    public set id(value: string) {
+        this.m_id = value;
+    }
+
+    public get name(): string {
+        return this.m_name;
+    }
+
+    public set name(value: string) {
+        this.m_name = value;
+    }
+
+    public toSgtring(): string {
+        return this.m_name;
+    }
+}
+
+const f: Foo = new Foo();
+f.id = 'This is the id';
+f.name = 'This is the name';
+
+const b: Bar = <Bar>ObjectMapper.autoMap<Foo, Bar>(f, () => new Bar());
+```
+
+**Custom mappig example**
+
+By creating a mapping configuration one can handle the mapping process and control it to match requirements
+```ts
+
+const config = new ObjectMapConfigurationBuilder();
+config.map('id').from('id');
+config.map('name').from('name').custom((value: any) => 'NAME: ' + value); // adds the prefix NAME: to the value
+
+const f: Foo = new Foo();
+f.id = 'This is the id';
+f.name = 'This is the name';
+
+const b: Bar = <Bar>ObjectMapper.map<Foo, Bar>(config.build(), f, () => new Bar());
+        
 ```
 
 ## Contributing
