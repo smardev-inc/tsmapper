@@ -76,7 +76,9 @@ By creating a mapping configuration one can handle the mapping process and contr
 
 const config = new ObjectMapConfigurationBuilder();
 config.map('id').from('id');
-config.map('name').from('name').custom((value: any) => 'NAME: ' + value); // adds the prefix NAME: to the value
+
+// map name adding a prefix
+config.map('name').from('name').custom((value: any) => 'PREFIX: ' + value); 
 
 const f: Foo = new Foo();
 f.id = 'This is the id';
