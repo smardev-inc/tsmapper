@@ -3,7 +3,7 @@
 
 import { ObjectMapper } from '../index';
 import { describe, it, expect } from 'jest-without-globals';
-import { ObjectMapConfigurationBuilder, ObjectMapConfiguration } from '../lib/objectmapconfiguration';
+import { MapConfigurationBuilder, MapConfiguration } from '../index';
 import { usersData } from './data';
 import { User } from './models';
 
@@ -27,7 +27,7 @@ describe('ObjectMapper Tests', () => {
     });
 
     it('Custom mapping from Json to Class', () => {
-        const config = new ObjectMapConfigurationBuilder();
+        const config = new MapConfigurationBuilder();
 
         config
             .map('id')
@@ -57,7 +57,7 @@ describe('ObjectMapper Tests', () => {
     });
 
     it('Configure using implicit builder', () => {
-        const config = ObjectMapConfiguration.create((builder: ObjectMapConfigurationBuilder) => {
+        const config = MapConfiguration.create((builder: MapConfigurationBuilder) => {
             builder
                 .map('id')
                 .from('id')

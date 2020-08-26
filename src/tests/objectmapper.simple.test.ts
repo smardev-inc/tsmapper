@@ -1,4 +1,4 @@
-import { ObjectMapper, ObjectMapConfigurationBuilder } from '../index';
+import { ObjectMapper, MapConfigurationBuilder } from '../index';
 import { describe, it, expect } from 'jest-without-globals';
 
 class Foo {
@@ -85,7 +85,7 @@ describe('ObjectMapper Simple Tests', () => {
     });
 
     it('Simple object mapping', () => {
-        const config = new ObjectMapConfigurationBuilder();
+        const config = new MapConfigurationBuilder();
         config.map('id').from('id');
         config.map('name').from('name');
         const b: Bar = ObjectMapper.mapSingle<Foo, Bar>(config.build(), f, () => new Bar());
@@ -95,7 +95,7 @@ describe('ObjectMapper Simple Tests', () => {
     });
 
     it('No error if destination does not have all the properties', () => {
-        const config = new ObjectMapConfigurationBuilder();
+        const config = new MapConfigurationBuilder();
         config.map('name').from('name');
         const b: IdOnly = ObjectMapper.mapSingle<Foo, IdOnly>(config.build(), f, () => new IdOnly());
 
@@ -103,7 +103,7 @@ describe('ObjectMapper Simple Tests', () => {
     });
 
     it('No error if destination does not have all the properties', () => {
-        const config = new ObjectMapConfigurationBuilder();
+        const config = new MapConfigurationBuilder();
         config.map('name').from('name');
         const b: IdOnly = ObjectMapper.mapSingle<Foo, IdOnly>(config.build(), f, () => new IdOnly());
 
@@ -111,7 +111,7 @@ describe('ObjectMapper Simple Tests', () => {
     });
 
     it('mapSingle and map return are equivalent', () => {
-        const config = new ObjectMapConfigurationBuilder();
+        const config = new MapConfigurationBuilder();
         config.map('id').from('id');
         config.map('name').from('name');
         const b: Bar = ObjectMapper.mapSingle<Foo, Bar>(config.build(), f, () => new Bar());

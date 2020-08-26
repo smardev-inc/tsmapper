@@ -3,7 +3,7 @@
 
 import * as Utils from './utils';
 import { TypeDescriptor } from './typedescriptor';
-import { ObjectMapConfiguration } from './objectmapconfiguration';
+import { MapConfiguration } from './../index';
 
 /**
  * Provides object mapping methods
@@ -45,7 +45,7 @@ export class ObjectMapper {
      * @returns
      * The newly created TTo instance instance
      */
-    public static map<TFrom, TTo>(config: ObjectMapConfiguration, source: TFrom | TFrom[], factory: () => TTo): TTo | TTo[] {
+    public static map<TFrom, TTo>(config: MapConfiguration, source: TFrom | TFrom[], factory: () => TTo): TTo | TTo[] {
         return ObjectMapper.mapInternal(config, source, factory);
     }
 
@@ -64,7 +64,7 @@ export class ObjectMapper {
      * @returns
      * The newly created TTo instance instance
      */
-    public static mapSingle<TFrom, TTo>(config: ObjectMapConfiguration, source: TFrom, factory: () => TTo): TTo {
+    public static mapSingle<TFrom, TTo>(config: MapConfiguration, source: TFrom, factory: () => TTo): TTo {
         return ObjectMapper.mapInternal(config, source, factory);
     }
 
@@ -83,11 +83,11 @@ export class ObjectMapper {
      * @returns
      * The an array of TTo instances
      */
-    public static mapArray<TFrom, TTo>(config: ObjectMapConfiguration, source: TFrom[], factory: () => TTo): Array<TTo> {
+    public static mapArray<TFrom, TTo>(config: MapConfiguration, source: TFrom[], factory: () => TTo): Array<TTo> {
         return ObjectMapper.mapInternal(config, source, factory);
     }
 
-    private static mapInternal(config: ObjectMapConfiguration, source: any, factory: () => any): any {
+    private static mapInternal(config: MapConfiguration, source: any, factory: () => any): any {
         // mapping from source array
         if (Array.isArray(source)) {
             const array: any[] = [];
