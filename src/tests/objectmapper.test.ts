@@ -3,7 +3,7 @@
 
 import { ObjectMapper } from '../index';
 import { describe, it, expect } from 'jest-without-globals';
-import { MapConfigurationBuilder, MapConfiguration } from '../index';
+import { MapConfigurationBuilder, MapConfiguration, TypeRef } from '../index';
 import { usersData } from './data';
 import { User } from './models';
 
@@ -78,5 +78,22 @@ describe('ObjectMapper Tests', () => {
         expect(config.mappingInstructions[4].propertyName).toBe('profilePicture');
         expect(config.mappingInstructions[5].propertyName).toBe('userName');
         expect(config.mappingInstructions[6].propertyName).toBe('displayName');
+    });
+
+    it('Default builder with undefined target is not supported', () => {
+        const config = MapConfiguration.create((builder: MapConfigurationBuilder) => {
+            expect(() => builder.default<any, User>(undefined, <TypeRef<User>>(<unknown>null))).toThrow('Argument null exception (target)');
+            expect(() => builder.default<any, User>(undefined, <TypeRef<User>>(<unknown>undefined))).toThrow('Argument null exception (target)');
+        });
+
+        expect(config.mappingInstructions.length).toBe(0);
+    });
+
+    it('Configure using default builder', () => {
+        const config = MapConfiguration.create((builder: MapConfigurationBuilder) => {
+            builder.default<any, User>(undefined, User);
+        });
+
+        expect(config.mappingInstructions.length).toBe(1);
     });
 });

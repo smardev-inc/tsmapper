@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/no-explicit-any: 0 */
+
 export { ObjectMapper } from './lib/objectmapper';
 export * from './lib/interfaces';
 export { MapBuilder } from './lib/mapbuilder';
@@ -6,3 +8,5 @@ export { MapInstructionBuilder } from './lib/mapInstructionbuilder';
 export { MapConfiguration } from './lib/mapconfiguration';
 export { MapConfigurationBuilder } from './lib/mapconfigurationbuilder';
 export { MapProfile } from './lib/mapprofile';
+
+export type TypeRef<T> = new (...args: any[]) => T;
