@@ -9,26 +9,7 @@ import { MapConfiguration } from './../index';
  * Provides object mapping methods
  */
 export class ObjectMapper {
-    //private static typeDescriptors = new Map<string, TypeDescriptor>();
     private static mappingNamePrefixes = ['', 'm_', '_'];
-
-    private static getTypeDescriptor(obj: any): TypeDescriptor {
-        /*TODO: The caching is not working, need to sort this out
-        let clsid = obj.constructor.prototype['CLSID'];
-        if (Utils.isNullOrUndefined(clsid)) {
-            clsid = '__TSMAPPER_' + ObjectMapper.typeDescriptors.size;
-            obj.constructor.prototype['CLSID'] = clsid;
-        }
-
-        if (ObjectMapper.typeDescriptors.has(clsid)) {
-            return <TypeDescriptor>ObjectMapper.typeDescriptors.get(clsid);
-        }
-        */
-
-        const descriptor = TypeDescriptor.create(obj);
-        //ObjectMapper.typeDescriptors.set(clsid, descriptor);
-        return descriptor;
-    }
 
     /**
      * Maps the source instance to a new instance of TTo, using the provided configuration
@@ -187,8 +168,8 @@ export class ObjectMapper {
         }
 
         const result = factory();
-        const sourceDescriptor = ObjectMapper.getTypeDescriptor(source);
-        const targetDescriptor = ObjectMapper.getTypeDescriptor(result);
+        const sourceDescriptor = TypeDescriptor.create(source);
+        const targetDescriptor = TypeDescriptor.create(result);
 
         Array.from(targetDescriptor.propertyNames).forEach((name) => {
             const value: any = ObjectMapper.getPropertyValue(sourceDescriptor, source, name, ObjectMapper.mappingNamePrefixes);

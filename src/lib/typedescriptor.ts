@@ -5,6 +5,8 @@ import { PropertyDescriptor } from './propertydescriptor';
 import { FieldDescriptor } from './fielddescriptor';
 
 export class TypeDescriptor {
+    //private static descriptors = new Map<string, TypeDescriptor>();
+
     private properties: Map<string, PropertyDescriptor> = new Map<string, PropertyDescriptor>();
     private fields: Map<string, FieldDescriptor> = new Map<string, FieldDescriptor>();
 
@@ -63,6 +65,18 @@ export class TypeDescriptor {
     }
 
     public static create(obj: any): TypeDescriptor {
+        /*TODO: The caching is not working, need to sort this out
+        let clsid = obj.constructor.prototype['CLSID'];
+        if (Utils.isNullOrUndefined(clsid)) {
+            clsid = '__TSMAPPER_' + TypeDescriptor.descriptors.size;
+            obj.constructor.prototype['CLSID'] = clsid;
+        }
+
+        if (TypeDescriptor.descriptors.has(clsid)) {
+            return <TypeDescriptor>TypeDescriptor.descriptors.get(clsid);
+        }
+        */
+
         const prototype = Object.getPrototypeOf(obj);
         const descriptor = new TypeDescriptor();
         const propNames = Object.getOwnPropertyNames(prototype);

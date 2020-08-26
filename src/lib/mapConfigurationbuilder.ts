@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 /*eslint no-use-before-define: ["error", { "classes": false }]*/
 
-import { MapInstructionBuilder, MapConfiguration } from './../index';
+import { MapInstructionBuilder, MapConfiguration } from '../index';
 
 export class MapConfigurationBuilder {
     private builders: Set<MapInstructionBuilder> = new Set<MapInstructionBuilder>();
@@ -17,10 +17,4 @@ export class MapConfigurationBuilder {
         Array.from(this.builders.values()).forEach((p) => result.addInstruction(p.build()));
         return result;
     }
-    /*
-    public default<TSource, TDestination>(source: Utils.Class<TSource> | undefined, destination: Utils.Class<TDestination>, profile: MapProfile)
-    {
-        this.map('dummy');
-    }
-    */
 }
