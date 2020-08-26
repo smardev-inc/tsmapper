@@ -2,13 +2,23 @@
 /*eslint no-use-before-define: ["error", { "classes": false }]*/
 
 import * as Utils from './utils';
-import { MapInstructionBuilder, MapConfiguration, TypeRef } from '../index';
+import { MapInstructionBuilder, MapConfiguration, TypeRef, IMapInstructionBuilder } from '../index';
 import { MapProfile } from './mapprofile';
+import { AutoMapInstructionBuilder } from './automapinstructionbuilder';
+import { TypeDescriptor } from './typedescriptor';
 import { Strings } from './strings';
 
+const defaultMapProfile = () => {
+    const result = new MapProfile();
+    result.caseSensitive = false;
+    result.usePrefixes('m_');
+
+    return result;
+};
+
 export class MapConfigurationBuilder {
-    private builders: Set<MapInstructionBuilder> = new Set<MapInstructionBuilder>();
-    private static defaultMapProfile: MapProfile = new MapProfile();
+    private builders: Set<IMapInstructionBuilder> = new Set<IMapInstructionBuilder>();
+    private static defaultMapProfile: MapProfile = defaultMapProfile();
 
     public map(name: string): MapInstructionBuilder {
         const builder = new MapInstructionBuilder(name);
@@ -31,7 +41,12 @@ export class MapConfigurationBuilder {
             profile = MapConfigurationBuilder.defaultMapProfile;
         }
 
-        this.map('dummy');
+        const targetInstance = new target();
+        const descriptor = TypeDescriptor.create(targetInstance);
+        Array.from(descriptor.propertyNames).forEach((name) => {
+            const builder = new AutoMapInstructionBuilder(name, <MapProfile>profile);
+            this.builders.add(builder);
+        });
     }
 
     public default<TSource, TTarget>(
@@ -40,9 +55,7 @@ export class MapConfigurationBuilder {
         profile: MapProfile | undefined = undefined
     ): void {
         if (Utils.isNullOrUndefined(source)) {
-            return this.defaultFromTarget<TTarget>(target, profile);
+            this.defaultFromTarget<TTarget>(target, profile);
         }
-
-        throw new Error('NOT IMPLEMENTED');
     }
 }

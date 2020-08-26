@@ -1,9 +1,9 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 
 import * as Utils from './utils';
-import { MapBuilder, IObjectMapInstruction, MapInstruction } from './../index';
+import { MapBuilder, IObjectMapInstruction, IMapInstructionBuilder, MapInstruction } from './../index';
 
-export class MapInstructionBuilder {
+export class MapInstructionBuilder implements IMapInstructionBuilder {
     public propertyyName: string;
     public mapBuilder: MapBuilder | undefined;
     public mapper: ((obj: any) => any) | undefined;

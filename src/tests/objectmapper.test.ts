@@ -94,6 +94,48 @@ describe('ObjectMapper Tests', () => {
             builder.default<any, User>(undefined, User);
         });
 
-        expect(config.mappingInstructions.length).toBe(1);
+        expect(config.mappingInstructions.length).toBe(7);
+    });
+
+    it('Map using default configuration builder', () => {
+        const config = MapConfiguration.create((builder: MapConfigurationBuilder) => {
+            builder.default<any, User>(undefined, User);
+        });
+
+        const users: User[] = <User[]>ObjectMapper.map<any, User>(config, usersData, () => new User());
+
+        expect(users.length).toBe(4);
+        for (let i = 0; i < users.length; i++) {
+            expect(users[i].id).toBe(usersData[i].id);
+            expect(users[i].birthDate).toBe(usersData[i].birthDate);
+            expect(users[i].email).toBe(usersData[i].email);
+            expect(users[i].phone).toBe(usersData[i].phone);
+            expect(users[i].profilePicture).toBe(usersData[i].profilePicture);
+            expect(users[i].displayName).toBe(undefined);
+            expect((<any>users[i]).first_name).toBe(undefined);
+            expect((<any>users[i]).last_name).toBe(undefined);
+        }
+    });
+
+    it('Map using custom configuration but starting with default builder', () => {
+        const config = MapConfiguration.create((builder: MapConfigurationBuilder) => {
+            builder.default<any, User>(undefined, User);
+            builder.map('displayName').custom((source: any) => source.first_name + ' ' + source.last_name);
+        });
+
+        const users: User[] = <User[]>ObjectMapper.map<any, User>(config, usersData, () => new User());
+
+        expect(users.length).toBe(4);
+        for (let i = 0; i < users.length; i++) {
+            expect(users[i].id).toBe(usersData[i].id);
+            expect(users[i].birthDate).toBe(usersData[i].birthDate);
+            expect(users[i].email).toBe(usersData[i].email);
+            expect(users[i].phone).toBe(usersData[i].phone);
+            expect(users[i].profilePicture).toBe(usersData[i].profilePicture);
+            expect(users[i].displayName).toBe(usersData[i].first_name + ' ' + usersData[i].last_name);
+
+            expect((<any>users[i]).first_name).toBe(undefined);
+            expect((<any>users[i]).last_name).toBe(undefined);
+        }
     });
 });
